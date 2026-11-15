@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Open workspace from file",
+    "description": "Adds a button to the sidebar Workspaces header: pick a .code-workspace file and open all of its folders as one multi-root Workspace.",
+    "detail": "docs/DETAIL.md"
+  }
+}

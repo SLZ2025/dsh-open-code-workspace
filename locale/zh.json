@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "从文件打开工作区",
+    "description": "在侧栏「工作区」标题栏加一个按钮：选择 .code-workspace 文件，把它里面的多个目录合并成一个多根工作区打开。",
+    "detail": "docs/DETAIL.md"
+  }
+}
