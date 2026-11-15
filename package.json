@@ -4,6 +4,15 @@
   "description": "Open a VS Code .code-workspace file from the DSH sidebar as one multi-root Workspace.",
   "type": "module",
   "license": "MIT",
+  "author": "SLZ2025",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SLZ2025/dsh-open-code-workspace.git"
+  },
+  "homepage": "https://github.com/SLZ2025/dsh-open-code-workspace#readme",
+  "bugs": {
+    "url": "https://github.com/SLZ2025/dsh-open-code-workspace/issues"
+  },
   "keywords": [
     "dsh",
     "dsh-plugin",

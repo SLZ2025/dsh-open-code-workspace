@@ -5,7 +5,7 @@
 
 ## 它做了什么
 
-侧栏 **工作区** 标题右侧、放大镜左边会多出一个小分支图标。点击后：
+侧栏 **工作区** 标题右侧、放大镜左边会多出一个小文件夹图标。点击后：
 
 1. 弹出系统文件对话框，只显示 `*.code-workspace`；
 2. 读取文件里的 `folders`（支持注释和尾随逗号）；
@@ -21,7 +21,8 @@
 
 ## 安装
 
-让 DSH 安装这个 bundle，或在 **插件** 页面安装。它的 patch 只插入一行：
+已发布到 npm：`dsh-open-code-workspace`。在 **插件** 页面安装，或把包名交给安装器
+（`dsh-open-code-workspace@0.1.0`）。它的 patch 只插入一行：
 
 ```yaml
 - insert:
@@ -35,8 +36,8 @@ Host 部分会立即生效；**刷新一次网页**让客户端部分加载。
 ## 使用
 
 1. 安装后刷新页面。
-2. 在侧栏找到 **工作区**，点标题和放大镜之间的分支图标。
-3. 选择 `.code-workspace` 文件（例如 `D:\Workspace\myworkspace.code-workspace`）。
+2. 在侧栏找到 **工作区**，点标题和放大镜之间的文件夹图标。
+3. 选择 `.code-workspace` 文件（例如 `C:\projects\acme.code-workspace`）。
 4. 工作区列表里会出现聚合后的一个工作区，并新开一个会话。
 
 搜索框展开时按钮会隐藏，不会遮住原生控件。
@@ -45,8 +46,8 @@ Host 部分会立即生效；**刷新一次网页**让客户端部分加载。
 
 ```
 $DSH_HOME/multiroot/<文件标题>-<目录列表哈希>/
-    Alpha   -> D:\Workspace\MyKnowledgeBase   （junction / 软链接）
-    Beta    -> D:\Workspace/Maxwell_API
+    frontend  -> C:\projects\web-app   （junction / 软链接）
+    backend   -> C:\projects\api
 ```
 
 可以用 `DSH_OPEN_CODE_WORKSPACE_ROOT` 改根目录。修改工作区文件里的目录列表后会生成

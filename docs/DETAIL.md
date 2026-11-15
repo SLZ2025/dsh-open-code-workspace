@@ -44,8 +44,8 @@ directory, skips missing folders, and materializes the rest as one directory:
 
 ```
 $DSH_HOME/multiroot/<file title>-<folder-list hash>/
-    MyKnowledgeBase  -> D:\Workspace\MyKnowledgeBase   (junction / symlink)
-    Maxwell_API      -> D:\Workspace\Maxwell_API
+    frontend  -> C:\projects\web-app   (junction / symlink)
+    backend   -> C:\projects\api
     ...
 ```
 

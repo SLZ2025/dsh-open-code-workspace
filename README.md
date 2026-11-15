@@ -32,8 +32,9 @@ is copied, and the file itself is never executed.
 
 ## Install
 
-Ask DSH to install the bundle, or use the **Plugins** page. The bundle is a normal
-DSH bundle whose patch inserts one row:
+Published on npm as `dsh-open-code-workspace`. Install it from the **Plugins** page,
+or hand the package spec to the installer (`dsh-open-code-workspace@0.1.0`). The
+bundle is a normal DSH bundle whose patch inserts one row:
 
 ```yaml
 - insert:
@@ -48,9 +49,9 @@ activates immediately; **refresh the Web page** so the client half loads.
 ## Usage
 
 1. Refresh the page once after installation.
-2. In the sidebar, find **工作区**, then click the branch icon between the title and
-   the search icon.
-3. Pick a `.code-workspace` file (for example `D:\Workspace\myworkspace.code-workspace`).
+2. In the sidebar, find **工作区**, then click the open-folder icon between the title
+   and the search icon.
+3. Pick a `.code-workspace` file (for example `C:\projects\acme.code-workspace`).
 4. The Workspace appears with one entry per folder, and a new Session opens there.
 
 The button hides itself while the header's search field is expanded, so it never
@@ -60,8 +61,8 @@ overlaps the shipped controls.
 
 ```
 $DSH_HOME/multiroot/<file-title>-<folder-list-hash>/
-    Alpha   -> D:\Workspace\MyKnowledgeBase   (junction / symlink)
-    Beta    -> D:\Workspace/Maxwell_API
+    frontend  -> C:\projects\web-app   (junction / symlink)
+    backend   -> C:\projects\api
 ```
 
 Override the root with `DSH_OPEN_CODE_WORKSPACE_ROOT`. Editing the file's folder
