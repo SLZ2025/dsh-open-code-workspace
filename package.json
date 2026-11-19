@@ -1,6 +1,6 @@
 {
   "name": "dsh-open-code-workspace",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Open a VS Code .code-workspace file from the DSH sidebar as one multi-root Workspace.",
   "type": "module",
   "license": "MIT",

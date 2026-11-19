@@ -13,7 +13,9 @@
  *      opens a multi-root workspace.
  *
  * Both routes are plain `handler` routes: resource routes only answer GET/HEAD
- * over HTTP, and the client has to POST a path.
+ * over HTTP, and the client has to POST a path. Both are also gated by
+ * `ctx.connection.authorizeIndex`, the same browser-session check DSH's own
+ * pages use, so a Web page that is not the DSH UI cannot drive them.
  */
 import { existsSync, mkdirSync, readFileSync, statSync, symlinkSync } from 'node:fs'
 import { createHash } from 'node:crypto'
@@ -21,7 +23,7 @@ import { spawn } from 'node:child_process'
 import { homedir } from 'node:os'
 import { basename, dirname, isAbsolute, join, resolve } from 'node:path'
 
-export const inject = ['webServer']
+export const inject = ['webServer', 'connection']
 
 const ROUTE_PREFIX = '/dsh-open-code-workspace/'
 const DSH_HOME = process.env.DSH_HOME ?? join(homedir(), '.dsh')
@@ -44,7 +46,14 @@ export function apply(ctx) {
         return ctx.webServer.register({
           kind: 'exact',
           path,
-          handler: (request, response) => serve(respond, request, response),
+          handler: (request, response) => {
+            // Both routes act on the user's machine (native dialog, links on
+            // disk), so they accept only the page DSH itself authenticated:
+            // `authorizeIndex` validates the browser session cookie and owns the
+            // 401/redirect response when it refuses.
+            if (!ctx.connection.authorizeIndex(request, response)) return
+            return serve(respond, request, response)
+          },
         })
       } catch (error) {
         console.error(`[dsh-open-code-workspace] could not register ${path}: ${describe(error)}`)

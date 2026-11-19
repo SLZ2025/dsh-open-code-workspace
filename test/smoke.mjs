@@ -34,6 +34,7 @@ writeFileSync(
 )
 
 const routes = []
+let authorized = true
 const ctx = {
   effect(run) {
     run()
@@ -42,6 +43,14 @@ const ctx = {
     register(route) {
       routes.push(route)
       return () => {}
+    },
+  },
+  connection: {
+    authorizeIndex(request, response) {
+      if (authorized) return true
+      response.writeHead(401, { 'content-type': 'text/plain' })
+      response.end('dsh web authentication required')
+      return false
     },
   },
 }
@@ -138,6 +147,22 @@ check('GET is 405', wrongMethod.status === 405, wrongMethod.raw)
 
 const emptyBody = await call('multiroot', 'POST', '')
 check('empty body is 400', emptyBody.status === 400, emptyBody.raw)
+
+// Both routes must refuse a request whose browser session DSH did not authenticate.
+authorized = false
+const refusedMultiroot = await call('multiroot', 'POST', JSON.stringify({ path: workspaceFile }))
+check(
+  'multiroot refuses an unauthenticated request',
+  refusedMultiroot.status === 401 && refusedMultiroot.raw.includes('authentication required'),
+  `${refusedMultiroot.status} ${refusedMultiroot.raw}`,
+)
+const refusedPick = await call('pick', 'POST', '')
+check(
+  'pick refuses an unauthenticated request',
+  refusedPick.status === 401 && refusedPick.raw.includes('authentication required'),
+  `${refusedPick.status} ${refusedPick.raw}`,
+)
+authorized = true
 
 rmSync(workDir, { recursive: true, force: true })
 

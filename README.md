@@ -75,7 +75,9 @@ See [`docs/DETAIL.md`](docs/DETAIL.md) for the Slot reasoning, the two Host rout
 and the safety notes. In short: the client half registers a button in
 `shell.overlay` and anchors it to `[data-sidebar-workspace-header]`; the Host half
 owns the native dialog and the junction farm, because a browser can do neither and
-a `resource` route only answers `GET`/`HEAD`.
+a `resource` route only answers `GET`/`HEAD`. Both Host routes first call
+`ctx.connection.authorizeIndex`, so they accept only the DSH page the browser
+session authenticated and answer `401` to anything else.
 
 ## Troubleshooting
 

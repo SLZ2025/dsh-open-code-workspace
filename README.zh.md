@@ -59,7 +59,8 @@ $DSH_HOME/multiroot/<文件标题>-<目录列表哈希>/
 见 [`docs/DETAIL.md`](docs/DETAIL.md)：为什么用 `shell.overlay`、两个 Host 路由的分工、
 以及安全边界。简述：客户端只负责在 `[data-sidebar-workspace-header]` 旁绘制按钮，
 Host 端负责系统对话框和 junction 聚合——浏览器两样都做不到，而 `resource` 路由只响应
-`GET`/`HEAD`。
+`GET`/`HEAD`。两个 Host 路由都会先调用 `ctx.connection.authorizeIndex`，只接受 DSH
+页面已认证的浏览器会话，其他来源一律返回 `401`。
 
 ## 常见问题
 

@@ -37,6 +37,12 @@ because a resource route only answers `GET`/`HEAD` over HTTP:
 Linux. Cancelling answers `{ path: null }`; a second click while a dialog is open
 answers `409 picker-busy`.
 
+Both routes run `ctx.connection.authorizeIndex(request, response)` before doing
+anything else. That is the same browser-session check DSH's own pages go through:
+a request without the authenticated session cookie gets DSH's `401` (or the token
+redirect), so a Web page that is not the DSH UI cannot open a file dialog or
+create links on the machine.
+
 `multiroot` accepts only an absolute path to an existing `*.code-workspace`
 file. It parses the file with a small JSONC reader (VS Code allows `//`, `/* */`
 comments and trailing commas), resolves each folder against the file's own
@@ -61,6 +67,9 @@ the real repositories; nothing is copied.
 
 ## Safety notes
 
+* Both routes require the authenticated DSH browser session
+  (`ctx.connection.authorizeIndex`); unauthenticated or cross-site requests are
+  refused before any dialog or link work happens.
 * The Host only ever reads the file the user chose in the dialog; there is no
   endpoint that lists arbitrary directories.
 * Request bodies are capped at 8 KiB and paths at 4096 characters.
